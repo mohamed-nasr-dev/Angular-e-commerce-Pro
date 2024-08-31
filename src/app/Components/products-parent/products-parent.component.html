@@ -1,0 +1,83 @@
+    <table class="table container">
+      <thead>
+        <tr>
+          <th scope="col">Product Name</th>
+          <th scope="col">Product Price</th>
+          <th scope="col">Product Quantity</th>
+          <th scope="col">Total</th>
+          <th scope="col">
+            Action
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let prod of ProductCart ">
+          <ng-container *ngIf="prod.quantity">
+            <th scope="row">
+              {{ prod.name }}
+            </th>
+            <th scope="row">
+              {{ prod.price }}
+            </th>
+            <th scope="row">
+              {{ prod.quantity }}
+            </th>
+            <th scope="row">
+              {{ prod.quantity * prod.price}}
+            </th>
+
+            <th scope="row">
+              <button class="btn btn-danger" (click)="removeThisFromCart(prod)">Delete</button>
+            </th>
+          </ng-container>
+
+
+        </tr>
+
+
+      </tbody>
+      <ng-container *ngIf="ProductCart.length">
+        <tfoot>
+          <tr>
+            <td>
+              <label>Credit Card</label>
+            </td>
+            <td>
+              <input name="card" required maxlength="16" placeholder="xxxx xxxx xxxx xxxx" [(ngModel)]="card" #userCard="ngModel" type="tel" inputmode="numeric" pattern="[0-9]{16}">
+
+            </td>
+            <td>
+              <span *ngIf="userCard.invalid && userCard.dirty" style="color: red;margin: -13px;
+    font-size: 14px;"> Please Valid Credit Card Make
+              </span>
+            </td>
+            <td>
+              {{card|creditCard}}
+            </td>
+            <td>
+              <button [disabled]="userCard.invalid && userCard.dirty" class="btn btn-primary"> Submit
+              </button>
+            </td>
+          </tr>
+        </tfoot>
+      </ng-container>
+
+    </table>
+
+    <div class="container d-flex justify-content-between">
+      <input type="search" placeholder="Search for a Product" [(ngModel)]="search">
+      <div>
+        <button (click)="sort()"> <i [ngClass]="sortBy == 'up' ? 'fas fa-level-up' : 'fas fa-level-down' "></i></button>
+      </div>
+
+      <select [(ngModel)]="filteredBy">
+        <optgroup label="Category">
+          <option value="1">Tables</option>
+          <option value="2">Chairs</option>
+          <option value="3">TV Units</option>
+          <option value="4">All</option>
+        </optgroup>
+
+      </select>
+    </div>
+    <app-products [prodId]="prodId" [filteredBy]="filteredBy" [sortBy]="sortBy" [search]="search" (CartProducts)="addToCart($event)"></app-products>

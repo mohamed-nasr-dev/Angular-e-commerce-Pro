@@ -1,0 +1,106 @@
+<div class="container">
+  <div class="row d-flex justify-content-between p-3">
+
+    <!-- c. When select a category from dropdown list, display the products of this
+   category in the table [Use 2-way binding with the dropdown list]. -->
+
+
+    <ng-container *ngIf="purchasedBefore">
+      <h1>Thanks for purchasing from our Store Mr.{{ClientName}}</h1>
+    </ng-container>
+    <!-- b. Change the background color to yellow for the rows which contains product with quantity=1 and make the
+  
+  background color with the default color when the quantity is more than 1 [Use ngClass or ngStyle]. -->
+    <div class="col-lg-3 m-4 d-flex justify-content-between p-3" *ngFor="let product of filteredProduct" [ngStyle]="{'background-color': product.quantity==1 ? 'yellow' : (product.quantity>1 ? '#63E6BE' : '#eee') }">
+
+      <div class="card text-center" style="width: 18rem;">
+        <a [routerLink]="['/productDetails',product.id ]" routerLinkActive=" test">
+          <img class="card-img-top" [src]="product.PrdimgURL" alt="Card image cap" appImgStyle="red">
+        </a>
+        <div class="card-body">
+          <h5 class="card-title" #productName>{{product.name}}</h5>
+          <ng-container *ngIf="product.discount && product.discount!='No Discount'">
+            <h6>We offer an explicit discount of
+              {{product.discount}}
+            </h6>
+          </ng-container>
+          <p class="card-text" [ngClass]="(product.discount && product.discount!='No Discount')?'text-decoration-line-through':null">{{product.price| currency}}</p>
+          <ng-container *ngIf="product.discount && product.discount!='No Discount'">
+            <p class="card-text">{{product.price| applyDiscount:product.discount}}</p>
+          </ng-container>
+
+
+
+
+          <div class="d-flex  justify-content-around">
+            <button (click)="decrease(product)" class="btn btn-primary" [disabled]="!product.quantity">
+              -
+            </button>
+            <h3>
+              {{ product.quantity}}
+            </h3>
+
+            <button (click)="increase(product)" class="btn btn-primary">
+              +
+            </button>
+            <button (click)="sayThanks(product)" class="btn btn-primary" [disabled]="!product.quantity">
+              {{product.isPurchased && product.quantity?'Remove From Cart':'Buy'}}
+            </button>
+          </div>
+          <!-- <ng-container *ngIf="product.isPurchased ">
+            <div class="bg-success">Added To Cart</div>
+          </ng-container> -->
+
+          <div class="bg-success m-2 p-1" [hidden]="!product.isPurchased || !product.quantity ">Added To Cart</div>
+          <button (click)="goToEdit(product)" class="btn btn-secondary mt-2" [hidden]="!notLogged">
+            Edit Product
+          </button>
+        </div>
+      </div>
+
+
+
+    </div>
+  </div>
+</div>
+
+
+
+<!-- <div class="container">
+  <div class="row">
+    <app-side-menu class="col-lg-4  bg-info"></app-side-menu>
+    <div class="col-lg-8"> -->
+
+<!-- b. In the Component HTML:
+      (1) <h1> tag to display store name (Use angular Expression
+        {{}}).
+        (2) <img> tag to display store logo .
+        (3) Show all values of interface with any tags. -->
+<!-- <h1>Stroe Name : {{ourStore.Name}}</h1>
+      <img src={{ourStore.Logo}} style="width:60px" />
+      <ul> Our Branches
+        <li *ngFor="let branch of ourStore.Branches">{{branch}}</li>
+      </ul>
+
+      <h1> Our Products</h1>
+      <h2>Product Id :{{newProduct.ID}}</h2>
+
+
+
+
+    </div>
+  </div>
+</div> -->
+
+<!-- We offer an explicit discount of:” + Discount value from the discount property (Use angular Expression
+          {{}}). [Bonus]
+          (a) If the value of discount is: “No discount”,
+          (b) hide this <h3> tag (Use structural directive *ngIf). [Bonus] -->
+
+
+<!-- (3) Make a button “Buy”, that when clicked hides the Logo, 
+  and shows div “. (use Event binding (click), 
+  and IsPurshased flag, and method to toggle flag value, with *ngIf, to show or hide them).
+(i) Use *ngIf on the both parts that you want to show or hide. -->
+<!-- 2. Complete the following in the Products component:
+a. Disable button buy when the products with Quantity =0 -->

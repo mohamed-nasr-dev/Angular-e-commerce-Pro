@@ -1,0 +1,106 @@
+    <div class="container p-4">
+      <div class="card mb-4">
+        <div class="card-header">
+          Add New Product
+        </div>
+        <div class="card-body">
+          <form [formGroup]="userRegister" (ngSubmit)="addUser()">
+            <div class="form-group row mb-2">
+              <label for="name" class="col-md-2 col-form-label">Your Name :</label>
+              <div class="col-md-8">
+
+                <input formControlName="fullName" type="text" id="name" name="fullName" class="form-control" placeholder="fullName" [ngClass]="{'is-invalid':(fullName?.touched||fullName?.dirty) && fullName?.invalid}">
+
+                <span class="invalid-feedback">
+                  <span *ngIf="fullName?.errors?.['required']">Please enter fullName</span>
+                  <span *ngIf="fullName?.errors?.['pattern']">username is at least 3 characters</span>
+
+                </span>
+              </div>
+            </div>
+            <div class="form-group row mb-2">
+              <label for="email" class="col-md-2 col-form-label">Your Email :</label>
+              <div class="col-md-8">
+
+                <input formControlName="email" id="email" type="email" name="email" class="form-control" placeholder="email" [ngClass]="{'is-invalid':(email?.touched||email?.dirty) && email?.invalid}">
+
+                <span class="invalid-feedback">
+                  <span *ngIf="email?.errors?.['required']">Please enter your email</span>
+
+                </span>
+              </div>
+            </div>
+
+            <div class="form-group row mb-2">
+              <label for="password" class="col-md-2 col-form-label">Your password :</label>
+              <div class="col-md-8">
+
+                <input formControlName="password" id="password" type="password" name="password" class="form-control" placeholder="password" [ngClass]="{'is-invalid':(password?.touched||password?.dirty) && password?.invalid}">
+
+                <span class="invalid-feedback">
+                  <span *ngIf="password?.errors?.['required']">Please enter your password</span>
+
+                </span>
+              </div>
+            </div>
+            <div class="form-group row mb-2">
+              <label for="confirmPassword" class="col-md-2 col-form-label">Confirm Password password :</label>
+              <div class="col-md-8">
+
+                <input formControlName="confirmPassword" id="confirmPassword" type="password" name="confirmPassword" class="form-control" placeholder="confirmPassword" [ngClass]="{'is-invalid':(confirmPassword?.touched||confirmPassword?.dirty|| (confirmPassword!=password)) && confirmPassword?.invalid}">
+
+                <span class="invalid-feedback">
+                  <span *ngIf="confirmPassword!=password">Please To Match Your Password</span>
+
+                </span>
+              </div>
+            </div>
+
+
+
+
+            <div formArrayName="mobiles">
+              <div *ngFor="let add of mobiles.controls;let i=index" [formGroupName]=i>
+                <div class="form-group row mb-2">
+                  <label for={{i}} class="col-md-2 col-form-label">Your mobile :</label>
+                  <div class="col-md-8">
+
+                    <input id={{i}} formControlName="mobile" required type="text" name="mobile" class="form-control" placeholder="mobiles" [ngClass]="{'is-invalid':(add?.touched||add?.dirty) && add?.invalid}" maxlength="11">
+                    <span class="invalid-feedback">
+                      <span *ngIf="add.invalid">Please enter valid mobile </span>
+                    </span>
+                    <ng-container *ngIf="i">
+                      <button class="btn btn-danger col-md-2 mt-1" (click)="removeMobile(i)">Remove</button>
+                    </ng-container>
+                  </div>
+
+                </div>
+
+
+              </div>
+              <button type="button" class="btn btn-primary" (click)="addMobile()">Add mobile</button>
+
+            </div>
+
+
+            <div formArrayName="address">
+              <div *ngFor="let addre of address.controls;let i=index" [formGroupName]=i>
+                <div class="form-group row mb-2">
+                  <label for={{i+4}} class="col-md-2 col-form-label">Your {{text[i]}} :</label>
+                  <div class="col-md-8">
+
+                    <input id={{i+4}} formControlName={{text[i]}} required type="text" name={{text[i]}} class="form-control" placeholder={{text[i]}} [ngClass]="{'is-invalid':(addre?.touched||addre?.dirty) && addre?.invalid}" maxlength="11">
+                    <span class="invalid-feedback">
+                      <span *ngIf="addre.invalid">This Is Required</span>
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+
+            </div>
+            <div class="form-group row mb-2 text-center justify-content-center">
+              <button class="btn btn-primary text-center col-2 m-5" [disabled]="userRegister.invalid">signUp</button>
+            </div>
+          </form>
+        </div>

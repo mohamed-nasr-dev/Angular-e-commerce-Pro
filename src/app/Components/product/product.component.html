@@ -1,0 +1,36 @@
+<ng-container *ngIf="product">
+  <div class="container">
+    <div class="row d-flex justify-content-between p-5">
+
+      <div class="col-lg-4 ">
+        <img src={{product.PrdimgURL}} alt="" style="width:100%">
+      </div>
+      <div class="col-lg-4 ">
+
+        <h1>
+          {{ product.name }}
+        </h1>
+        <h3>
+          {{ product.price }}$
+        </h3>
+
+        <div style="text-align:center">
+
+
+
+        </div>
+
+      </div>
+      <div class="col-lg-12 mt-5 d-flex justify-content-around">
+        <button class="btn btn-outline btn-primary color-white p-2" [disabled]="currentIndex==0" (click)="goBack(product.id)">Previous</button>
+        <button class="btn btn-outline btn-primary color-white p-2" [disabled]="currentIndex==productsIDS.length" (click)="goFoward(product.id)">Next</button>
+      </div>
+
+      <div class="col-lg-12 mt-5">
+        <a class="nav-link btn btn-primary p-4" [routerLink]="['/' ]">
+          Back to Home
+        </a>
+      </div>
+    </div>
+  </div>
+</ng-container>

@@ -1,0 +1,27 @@
+<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+  <div class="container">
+    <a class="navbar-brand" href="#">
+      <img src="./assets/images/game-03.jpg" alt="Avatar Logo" style="width:50px;" class="rounded-pill logo">
+    </a>
+
+    <div>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="mynavbar">
+        <ul class="navbar-nav me-auto">
+
+
+          <li class="nav-item ml-4 mr-4" *ngFor="let route of routes">
+            <<ng-container *ngIf="route">
+              <a class="nav-link" routerLink="/{{route}}" routerLinkActive="test">{{route}}</a>
+              </ng-container>
+
+          </li>
+
+        </ul>
+
+      </div>
+    </div>
+  </div>
+</nav>
